@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 '''
 
 xecryptor.py - Application for Encrypting and Decrypting plain text using the (weak) XECryption algorithm.
@@ -56,8 +58,8 @@ class XECrypt:
 
         for value in enc_array:
 
-            #The trailing '.' at the end of XECrypted text causes int() to throw a ValueError.
-            #Since the trailing '.' is insignificant to the encryption, we may safely pass that case.
+            #The leading '.' at the beginning  of XECrypted text causes int() to throw a ValueError.
+            #Since the leading '.' is insignificant to the encryption, we may safely pass that case.
             try:
                 running_total += int(value)
             except ValueError:
@@ -84,7 +86,7 @@ class XECrypt:
             numbers[0] = floor(base_value / 3) + randint(-10, 10)
             numbers[1] = floor(base_value / 3) + randint(-10, 10)
             numbers[2] = base_value - (numbers[0] + numbers[1])
-            final_text += ( '.'.join(str(x) for x in numbers))
+            final_text += ('.' + '.'.join(str(x) for x in numbers))
 
         return final_text
 
@@ -128,7 +130,7 @@ class XECryptor:
         window = self.builder.get_object('window-main')
         window.show_all()
 
-        #Fix an odd glade bug.
+        #Workaround for an odd glade bug.
         combobox = self.builder.get_object('mode-dropdown')
         combobox.set_active(0)
 
